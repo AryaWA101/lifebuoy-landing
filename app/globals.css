@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --color-lifebuoy-red: #D0021B;
+  --color-lifebuoy-dark: #8B0000;
+  --color-lifebuoy-light: #FF3333;
+  --color-lifebuoy-cream: #FFF8F0;
+  --color-lifebuoy-gold: #F5A623;
+
+  --font-display: var(--font-bebas);
+  --font-body: var(--font-dm-sans);
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delay: float 6s ease-in-out 2s infinite;
+  --animate-ripple: ripple 1.5s ease-out infinite;
+  --animate-slideUp: slideUp 0.8s ease forwards;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(60px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@layer base {
+  * { scroll-behavior: smooth; }
+  ::selection {
+    background-color: #D0021B;
+    color: white;
+  }
+}
+
+@layer utilities {
+  .text-stroke {
+    -webkit-text-stroke: 3px white;
+    color: transparent;
+  }
+  .clip-diagonal {
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+  }
+  .clip-diagonal-reverse {
+    clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+  }
+}
