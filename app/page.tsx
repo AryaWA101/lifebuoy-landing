@@ -3,37 +3,41 @@ import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Shield, Droplets, Heart, Star, ChevronDown, Menu, X } from "lucide-react";
 
-// ─── DATA ───────────────────────────────────────────────
-const products = [
-  {
-    name: "Lifebuoy Total 10",
-    desc: "Melindungi dari 10 kuman berbahaya dalam sekali cuci.",
-    color: "from-red-700 to-red-500",
-    emoji: "🛡️",
-    tag: "Best Seller",
-  },
-  {
-    name: "Lifebuoy Mild Care",
-    desc: "Lembut di kulit, kuat melawan kuman. Cocok untuk kulit sensitif.",
-    color: "from-blue-600 to-cyan-400",
-    emoji: "🫧",
-    tag: "Terlembut",
-  },
-  {
-    name: "Lifebuoy Hijab",
-    desc: "Diformulasikan khusus untuk kesegaran sepanjang hari.",
-    color: "from-green-700 to-emerald-400",
-    emoji: "🌿",
-    tag: "Eksklusif",
-  },
-  {
-    name: "Lifebuoy Kids",
-    desc: "Formula lembut yang disukai anak-anak, aman dan efektif.",
-    color: "from-yellow-500 to-orange-400",
-    emoji: "⭐",
-    tag: "Untuk Si Kecil",
-  },
-];
+const response = {
+  page: 1,
+  results: [
+    {
+      id: 1,
+      title: "Lifebuoy Total 10",
+      body: "Melindungi keluarga dari 10 jenis kuman berbahaya dalam satu kali cuci. Formula ThymolD™ eksklusif bekerja dalam 10 detik untuk perlindungan maksimal sepanjang hari.",
+      image: "https://picsum.photos/500",
+    },
+    {
+      id: 2,
+      title: "Lifebuoy Mild Care",
+      body: "Diformulasikan khusus untuk kulit sensitif. Lembut di kulit namun tetap ampuh membunuh kuman. Cocok untuk seluruh anggota keluarga termasuk bayi dan lansia.",
+      image: "https://picsum.photos/500",
+    },
+    {
+      id: 3,
+      title: "Lifebuoy Hijab Fresh",
+      body: "Sabun mandi eksklusif untuk wanita berhijab. Menjaga kesegaran dan kebersihan kulit sepanjang hari meski dalam kondisi tertutup. Wangi segar tahan lama.",
+      image: "https://picsum.photos/500",
+    },
+    {
+      id: 4,
+      title: "Lifebuoy Kids",
+      body: "Sabun khusus anak-anak dengan formula lembut bebas air mata. Membiasakan si kecil cuci tangan dengan benar sejak dini untuk tumbuh sehat dan aktif.",
+      image: "https://picsum.photos/500",
+    },
+    {
+      id: 5,
+      title: "Lifebuoy Natural Pure",
+      body: "Perpaduan bahan alami pilihan dengan teknologi anti-kuman modern. Mengandung ekstrak herbal yang menjaga keseimbangan kulit sambil melindungi dari infeksi.",
+      image: "https://picsum.photos/500",
+    },
+  ],
+};
 
 const stats = [
   { value: "100+", label: "Tahun Perlindungan" },
@@ -65,7 +69,6 @@ const benefits = [
   },
 ];
 
-// ─── COMPONENTS ──────────────────────────────────────────
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -113,7 +116,6 @@ function Navbar() {
           Coba Sekarang
         </a>
 
-        {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
           className={`md:hidden ${scrolled ? "text-gray-800" : "text-white"}`}
@@ -122,7 +124,6 @@ function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
       {open && (
         <div className="md:hidden bg-white px-6 pb-6 flex flex-col gap-4">
           {["Produk", "Manfaat", "Tentang", "Kontak"].map((item) => (
@@ -144,7 +145,6 @@ function Navbar() {
 function HeroSection() {
   return (
     <section className="relative min-h-screen bg-lifebuoy-red clip-diagonal overflow-hidden flex items-center">
-      {/* Background circles */}
       <div className="absolute top-20 right-10 w-96 h-96 rounded-full bg-lifebuoy-dark opacity-30 animate-float" />
       <div className="absolute bottom-20 left-20 w-64 h-64 rounded-full bg-lifebuoy-light opacity-20 animate-float-delay" />
       <div className="absolute top-1/2 right-1/3 w-48 h-48 rounded-full border-4 border-white opacity-10 animate-float" />
@@ -191,7 +191,6 @@ function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Hero visual: big soap bubble */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -211,7 +210,6 @@ function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Scroll hint */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/60 animate-bounce">
         <ChevronDown size={32} />
       </div>
@@ -245,47 +243,41 @@ function ProductsSection() {
   return (
     <section id="produk" className="py-24 bg-lifebuoy-cream">
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <p className="font-body text-lifebuoy-red font-semibold uppercase tracking-widest mb-3">
             Pilihan Produk
           </p>
           <h2 className="font-display text-6xl md:text-7xl text-gray-900">
             TEMUKAN <span className="text-lifebuoy-red">PRODUKMU</span>
           </h2>
-        </motion.div>
+        </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((p, i) => (
-            <motion.div
-              key={p.name}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15 }}
-              whileHover={{ y: -8 }}
-              className="bg-white rounded-3xl overflow-hidden shadow-lg cursor-pointer group"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {response.results.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white rounded-3xl overflow-hidden shadow-lg hover:-translate-y-2 transition-transform duration-300"
             >
-              <div className={`bg-gradient-to-br ${p.color} p-10 flex items-center justify-center`}>
-                <span className="text-7xl group-hover:scale-110 transition-transform duration-300">
-                  {p.emoji}
-                </span>
-              </div>
+              <img
+                src={`${item.image}?random=${item.id}`}
+                alt={item.title}
+                className="w-full h-48 object-cover"
+              />
               <div className="p-6">
                 <span className="inline-block bg-lifebuoy-red/10 text-lifebuoy-red text-xs font-semibold px-3 py-1 rounded-full mb-3">
-                  {p.tag}
+                  Produk #{item.id}
                 </span>
-                <h3 className="font-display text-2xl text-gray-900 mb-2">{p.name}</h3>
-                <p className="font-body text-gray-500 text-sm mb-4">{p.desc}</p>
-                <button className="w-full bg-gray-900 text-white font-body font-semibold py-3 rounded-2xl hover:bg-lifebuoy-red transition-colors duration-300">
+                <h3 className="font-display text-2xl text-gray-900 mb-3 leading-tight">
+                  {item.title}
+                </h3>
+                <p className="font-body text-gray-500 text-sm leading-relaxed">
+                  {item.body}
+                </p>
+                <button className="mt-5 w-full bg-lifebuoy-red text-white font-body font-semibold py-3 rounded-2xl hover:bg-lifebuoy-dark transition">
                   Beli Sekarang
                 </button>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -297,7 +289,6 @@ function BenefitsSection() {
   return (
     <section id="manfaat" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-        {/* Left: big text */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -321,7 +312,6 @@ function BenefitsSection() {
           </p>
         </motion.div>
 
-        {/* Right: benefit cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {benefits.map((b, i) => (
             <motion.div
@@ -447,6 +437,115 @@ function CTASection() {
   );
 }
 
+function HandwashTimerSection() {
+  const DURATION = 20;
+  const [seconds, setSeconds] = useState(DURATION);
+  const [isRunning, setIsRunning] = useState(false);
+  const [step, setStep] = useState(0);
+
+  const steps = [
+    "💧 Basahi tangan dengan air bersih",
+    "🧴 Tuangkan sabun Lifebuoy secukupnya",
+    "🤲 Gosok telapak tangan",
+    "🙌 Gosok punggung tangan & sela jari",
+    "👐 Gosok ujung jari & kuku",
+    "✅ Bilas & keringkan — Selesai!",
+  ];
+
+  useEffect(() => {
+    if (!isRunning) return;
+
+    if (seconds === 0) {
+      setIsRunning(false);
+      alert("✅ 20 detik selesai! Tangan kamu sudah bersih dari kuman. Jaga kesehatan bersama Lifebuoy!");
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setSeconds((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [isRunning, seconds]);
+
+  useEffect(() => {
+    if (!isRunning) return;
+    const elapsed = DURATION - seconds;
+    setStep(Math.min(Math.floor(elapsed / 4), steps.length - 2));
+  }, [seconds, isRunning]);
+
+  const handleStart = () => {
+    setSeconds(DURATION);
+    setStep(0);
+    setIsRunning(true);
+  };
+
+  const handleReset = () => {
+    setIsRunning(false);
+    setSeconds(DURATION);
+    setStep(0);
+  };
+
+  const progress = ((DURATION - seconds) / DURATION) * 100;
+
+  return (
+    <section id="tentang" className="py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-6 text-center">
+        <p className="font-body text-lifebuoy-red font-semibold uppercase tracking-widest mb-3">
+          Fitur Interaktif
+        </p>
+        <h2 className="font-display text-6xl text-gray-900 mb-4">
+          TIMER CUCI <span className="text-lifebuoy-red">TANGAN</span>
+        </h2>
+        <p className="font-body text-gray-500 mb-12 max-w-lg mx-auto">
+          WHO merekomendasikan cuci tangan minimal 20 detik. Yuk biasakan bersama Lifebuoy!
+        </p>
+
+        <div className="inline-block bg-lifebuoy-cream rounded-3xl p-10 shadow-xl max-w-md w-full">
+
+          <div className="font-display text-9xl text-lifebuoy-red mb-2">
+            {seconds}
+          </div>
+          <p className="font-body text-gray-400 text-sm mb-6">detik tersisa</p>
+
+          <div className="w-full bg-gray-200 rounded-full h-3 mb-6">
+            <div
+              className="bg-lifebuoy-red h-3 rounded-full transition-all duration-1000"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
+          <div className="bg-white rounded-2xl p-4 mb-6 min-h-[60px] flex items-center justify-center">
+            <p className="font-body text-gray-700 font-medium">
+              {isRunning || seconds < DURATION ? steps[step] : "Tekan Mulai untuk memulai timer"}
+            </p>
+          </div>
+
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={handleReset}
+              className="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-body font-bold rounded-2xl transition"
+            >
+              Reset
+            </button>
+            <button
+              onClick={() => setIsRunning(!isRunning)}
+              disabled={seconds === 0}
+              className="px-8 py-3 bg-lifebuoy-red hover:bg-lifebuoy-dark text-white font-body font-bold rounded-2xl transition disabled:opacity-40"
+            >
+              {isRunning ? "Pause" : "Mulai"}
+            </button>
+          </div>
+
+          <p className="font-body text-gray-400 text-xs mt-5">
+            💡 Alert muncul otomatis saat timer mencapai 0
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   return (
     <footer className="bg-gray-950 py-12">
@@ -476,6 +575,7 @@ export default function Home() {
       <StatsBar />
       <ProductsSection />
       <BenefitsSection />
+      <HandwashTimerSection />
       <TestimonialSection />
       <CTASection />
       <Footer />
